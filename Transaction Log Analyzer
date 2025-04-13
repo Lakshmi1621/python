@@ -1,0 +1,14 @@
+def total_debit_by_user(transactions):
+    result = {}
+ for tx in transactions:
+    if tx['type'].lower() == 'debit':
+            user = tx['user']
+            amount = tx['amount']
+            result[user] = result.get(user, 0) + amoun return result
+transactions = [
+    {'user': 'lakshmi', 'amount': 100, 'type': 'debit'},
+    {'user': 'neelu', 'amount': 200, 'type': 'credit'},
+    {'user': 'lakshmi', 'amount': 300, 'type': 'debit'},
+    {'user': 'neelu', 'amount': 100, 'type': 'debit'}
+]
+print(total_debit_by_user(transactions))
