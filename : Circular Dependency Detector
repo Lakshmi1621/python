@@ -1,0 +1,39 @@
+def detect_circular_dependencies(dependencies):
+graph = {}
+ for pkg, dep in dependencies:
+        if pkg not in graph:
+            graph[pkg] = []
+        graph[pkg].append(dep)
+      visited = set()
+    rec_stack = set()
+    cycle_packages = []
+    def dfs(package):
+        if package in rec_stack:  # If package is in the current recursion stack, cycle detected
+            cycle_packages.append(package)
+            return True
+        if package in visited:  # If package has already been visited, no need to visit it again
+            return False
+         visited.add(package)
+        rec_stack.add(package)
+        for dep in graph.get(package, []):
+            if dfs(dep):
+                if package not in cycle_packages:
+                    cycle_packages.append(package)
+                return True
+          rec_stack.remove(package)
+        return False
+    for pkg in graph:
+        if pkg not in visited:
+            if dfs(pkg):
+                break  
+  return cycle_packages if cycle_packages else None
+dependencies = [
+    ('A', 'B'),
+    ('B', 'C'),
+    ('C', 'A'),  
+    ('D', 'E'),
+    ('E', 'D')   
+]
+
+result = detect_circular_dependencies(dependencies)
+print(result)
